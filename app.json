@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "tryon",
+    "slug": "tryon-expo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f5f0e8"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.tryonai.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera access is needed to take your photo for the virtual try-on.",
+        "NSPhotoLibraryUsageDescription": "Photo library access is needed to select your photo.",
+        "NSPhotoLibraryAddUsageDescription": "Photo library access is needed to save your try-on results."
+      }
+    },
+    "android": {
+      "package": "com.tryonai.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon-192.png",
+        "backgroundColor": "#f5f0e8"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Photo library access is needed to select your photo.",
+          "cameraPermission": "Camera access is needed to take your photo for the virtual try-on."
+        }
+      ],
+      "expo-secure-store"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9b58974c-3a39-4d5f-8690-139ec9167d3c"
+      }
+    },
+    "owner": "gokomoko1"
+  }
+}
