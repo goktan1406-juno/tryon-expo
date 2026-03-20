@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, StatusBar, Alert, Dimensions,
+  ScrollView, StatusBar, Alert, Dimensions, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useCredits } from '../hooks/useCredits';
@@ -11,18 +11,18 @@ import Logo from '../components/Logo';
 const { width } = Dimensions.get('window');
 
 const PLANS = {
-  monthly: { label: 'Monthly', price: '180', period: '/mo', credits: 10, saving: null },
-  annual:  { label: 'Annual', price: '1,800', period: '/yr', credits: 10, saving: '17% off' },
+  weekly: { label: 'Weekly', price: '250', period: '/wk', credits: 10, saving: null },
+  annual: { label: 'Annual', price: '2,400', period: '/yr', credits: 10, saving: '42% off' },
 };
 
 const CREDIT_PACKS = [
-  { amount: 10, price: '180', perCredit: '18' },
-  { amount: 20, price: '340', perCredit: '17', popular: true },
-  { amount: 40, price: '600', perCredit: '15', best: true },
+  { amount: 10, price: '250', perCredit: '25' },
+  { amount: 20, price: '450', perCredit: '22', popular: true },
+  { amount: 40, price: '800', perCredit: '20', best: true },
 ];
 
 const FEATURES = [
-  '10 virtual try-on credits per month',
+  'Virtual try-on credits included',
   'Realistic AI fitting technology',
   'Works with model-worn garments',
   'Try-on via store product link',
@@ -32,7 +32,7 @@ const FEATURES = [
 export default function PaywallScreen({ navigation, route }) {
   const returnTo = route?.params?.returnTo || 'Upload';
   const { purchasePlan, purchaseCredits } = useCredits();
-  const [plan, setPlan] = useState('annual');
+  const [plan, setPlan] = useState('weekly');
   const [loading, setLoading] = useState(false);
 
   const handleSubscribe = async () => {
@@ -123,7 +123,9 @@ export default function PaywallScreen({ navigation, route }) {
           <View style={styles.cardTop}>
             <View>
               <Text style={styles.cardCredits}>{selected.credits} credits</Text>
-              <Text style={styles.cardPeriodLabel}>renews every month</Text>
+              <Text style={styles.cardPeriodLabel}>
+            {plan === 'weekly' ? 'renews every week' : 'renews every year'}
+          </Text>
             </View>
             <View style={styles.cardPriceBlock}>
               <Text style={styles.cardCurrency}>₺</Text>
@@ -158,7 +160,7 @@ export default function PaywallScreen({ navigation, route }) {
           <Text style={styles.cardNote}>
             {plan === 'annual'
               ? 'Billed annually · Cancel anytime'
-              : 'Billed monthly · Cancel anytime'}
+              : 'Billed weekly · Cancel anytime'}
           </Text>
         </View>
 
@@ -209,7 +211,12 @@ export default function PaywallScreen({ navigation, route }) {
 
         <Text style={styles.legalNote}>
           Payment is processed through the App Store / Google Play.
-          Subscription automatically renews unless cancelled at least 24 hours before the renewal date.
+          Subscription automatically renews unless cancelled at least 24 hours before the renewal date.{' '}
+          <Text
+            style={[styles.legalNote, { color: colors.copper, textDecorationLine: 'underline' }]}
+            onPress={() => Linking.openURL('https://goktan1406-juno.github.io/tryon-expo/privacy.html')}>
+            Privacy Policy
+          </Text>
         </Text>
 
         <View style={{ height: 40 }} />

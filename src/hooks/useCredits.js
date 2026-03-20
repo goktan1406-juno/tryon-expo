@@ -38,7 +38,7 @@ export function useCredits() {
   }, [credits]);
 
   const spendCredit = useCallback(async () => {
-    if (credits.count <= 0) throw new Error('Yeterli krediniz yok.');
+    if (credits.count <= 0) throw new Error('Not enough credits.');
     const updated = { ...credits, count: credits.count - 1 };
     await save(updated);
   }, [credits]);
