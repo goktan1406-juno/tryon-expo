@@ -14,12 +14,13 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tryonai.app",
-      "buildNumber": "1",
+      "buildNumber": "2",
       "minimumOsVersion": "15.1",
       "infoPlist": {
         "NSCameraUsageDescription": "Camera access is needed to take your photo for the virtual try-on.",
         "NSPhotoLibraryUsageDescription": "Photo library access is needed to select your photo.",
-        "NSPhotoLibraryAddUsageDescription": "Photo library access is needed to save your try-on results."
+        "NSPhotoLibraryAddUsageDescription": "Photo library access is needed to save your try-on results.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -31,7 +32,8 @@
       },
       "permissions": [
         "android.permission.CAMERA",
-        "android.permission.READ_MEDIA_IMAGES"
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "plugins": [
