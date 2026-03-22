@@ -37,18 +37,17 @@ export default function PaywallScreen({ navigation, route }) {
   const handleSubscribe = async () => {
     setLoading(true);
     try {
-      const offerings = await Purchases.getOfferings();
-      const pkgId = plan === 'weekly' ? '$rc_weekly' : '$rc_annual';
-      const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
-      if (!pkg) throw new Error('Package not available. Try again later.');
-      await Purchases.purchasePackage(pkg);
       const credits = plan === 'weekly' ? 10 : 120;
+      if (Purchases) {
+        const offerings = await Purchases.getOfferings();
+        const pkgId = plan === 'weekly' ? '$rc_weekly' : '$rc_annual';
+        const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
+        if (!pkg) throw new Error('Package not available. Try again later.');
+        await Purchases.purchasePackage(pkg);
+      }
       await purchaseCredits(credits);
-      Alert.alert(
-        'Subscription Active!',
-        `${credits} credits have been added to your account.`,
-        [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]
-      );
+      Alert.alert('Subscription Active!', `${credits} credits have been added to your account.`,
+        [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]);
     } catch (e) {
       if (!e.userCancelled) Alert.alert('Error', e.message);
     } finally {
@@ -59,17 +58,16 @@ export default function PaywallScreen({ navigation, route }) {
   const handleCreditPack = async (pack) => {
     setLoading(true);
     try {
-      const offerings = await Purchases.getOfferings();
-      const pkgId = `credits_${pack.amount}`;
-      const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
-      if (!pkg) throw new Error('Package not available. Try again later.');
-      await Purchases.purchasePackage(pkg);
+      if (Purchases) {
+        const offerings = await Purchases.getOfferings();
+        const pkgId = `credits_${pack.amount}`;
+        const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
+        if (!pkg) throw new Error('Package not available. Try again later.');
+        await Purchases.purchasePackage(pkg);
+      }
       await purchaseCredits(pack.amount);
-      Alert.alert(
-        'Credits Added!',
-        `${pack.amount} credits have been added to your account.`,
-        [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]
-      );
+      Alert.alert('Credits Added!', `${pack.amount} credits have been added to your account.`,
+        [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]);
     } catch (e) {
       if (!e.userCancelled) Alert.alert('Error', e.message);
     } finally {

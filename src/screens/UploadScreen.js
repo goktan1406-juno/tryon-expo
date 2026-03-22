@@ -99,7 +99,7 @@ export default function UploadScreen({ navigation }) {
               <Text style={card.placeholderTitle}>Clothing Image</Text>
               <Text style={card.placeholderHint}>Take a screenshot from the product page</Text>
               <View style={styles.tipList}>
-                {['Zara, H&M, ASOS, Shein...', 'Any store works', 'Single item gives best results'].map(t => (
+                {['Any online store works', 'Single item gives best results', 'Clear product photo recommended'].map(t => (
                   <Text key={t} style={styles.tipText}>— {t}</Text>
                 ))}
               </View>
