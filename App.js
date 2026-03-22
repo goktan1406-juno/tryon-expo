@@ -1,7 +1,8 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Purchases from 'react-native-purchases';
 import HomeScreen from './src/screens/HomeScreen';
 import UploadScreen from './src/screens/UploadScreen';
 import ProcessingScreen from './src/screens/ProcessingScreen';
@@ -13,6 +14,10 @@ import CollectionScreen from './src/screens/CollectionScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    Purchases.configure({ apiKey: 'appl_vFseVuXZIcLBFzTuZnegzabNepT' });
+  }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>

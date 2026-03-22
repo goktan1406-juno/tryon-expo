@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, StatusBar, Alert, Dimensions, Linking,
+  ScrollView, StatusBar, Alert, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Purchases from 'react-native-purchases';
 import { useCredits } from '../hooks/useCredits';
 import { colors, fonts, spacing } from '../utils/theme';
 import Logo from '../components/Logo';
-
-const { width } = Dimensions.get('window');
 
 const PLANS = {
   weekly: { label: 'Weekly', price: '250', period: '/wk', credits: 10, saving: null },
@@ -31,22 +30,27 @@ const FEATURES = [
 
 export default function PaywallScreen({ navigation, route }) {
   const returnTo = route?.params?.returnTo || 'Upload';
-  const { purchasePlan, purchaseCredits } = useCredits();
+  const { purchaseCredits } = useCredits();
   const [plan, setPlan] = useState('weekly');
   const [loading, setLoading] = useState(false);
 
   const handleSubscribe = async () => {
     setLoading(true);
     try {
-      // TODO: Gerçek ödeme entegrasyonu (RevenueCat / Stripe)
-      await purchasePlan(plan);
+      const offerings = await Purchases.getOfferings();
+      const pkgId = plan === 'weekly' ? '$rc_weekly' : '$rc_annual';
+      const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
+      if (!pkg) throw new Error('Package not available. Try again later.');
+      await Purchases.purchasePackage(pkg);
+      const credits = plan === 'weekly' ? 10 : 120;
+      await purchaseCredits(credits);
       Alert.alert(
         'Subscription Active!',
-        `${PLANS[plan].credits} credits have been added to your account.`,
+        `${credits} credits have been added to your account.`,
         [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]
       );
     } catch (e) {
-      Alert.alert('Error', e.message);
+      if (!e.userCancelled) Alert.alert('Error', e.message);
     } finally {
       setLoading(false);
     }
@@ -55,7 +59,11 @@ export default function PaywallScreen({ navigation, route }) {
   const handleCreditPack = async (pack) => {
     setLoading(true);
     try {
-      // TODO: Gerçek ödeme entegrasyonu
+      const offerings = await Purchases.getOfferings();
+      const pkgId = `credits_${pack.amount}`;
+      const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
+      if (!pkg) throw new Error('Package not available. Try again later.');
+      await Purchases.purchasePackage(pkg);
       await purchaseCredits(pack.amount);
       Alert.alert(
         'Credits Added!',
@@ -63,7 +71,7 @@ export default function PaywallScreen({ navigation, route }) {
         [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]
       );
     } catch (e) {
-      Alert.alert('Error', e.message);
+      if (!e.userCancelled) Alert.alert('Error', e.message);
     } finally {
       setLoading(false);
     }
