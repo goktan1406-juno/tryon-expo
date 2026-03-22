@@ -10,14 +10,14 @@ import { colors, fonts, spacing } from '../utils/theme';
 import Logo from '../components/Logo';
 
 const PLANS = {
-  weekly: { label: 'Weekly', price: '250', period: '/wk', credits: 10, saving: null },
-  annual: { label: 'Annual', price: '2,400', period: '/yr', credits: 10, saving: '42% off' },
+  weekly: { label: 'Weekly', price: '249.99', period: '/wk', credits: 10, saving: null },
+  annual: { label: 'Annual', price: '2,499.99', period: '/yr', credits: 120, saving: '42% off' },
 };
 
 const CREDIT_PACKS = [
-  { amount: 10, price: '250', perCredit: '25' },
-  { amount: 20, price: '450', perCredit: '22', popular: true },
-  { amount: 40, price: '800', perCredit: '20', best: true },
+  { amount: 10, price: '299', perCredit: '29' },
+  { amount: 20, price: '499', perCredit: '24', popular: true },
+  { amount: 40, price: '899', perCredit: '22', best: true },
 ];
 
 const FEATURES = [
