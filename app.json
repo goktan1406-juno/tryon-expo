@@ -14,7 +14,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tryonai.app",
-      "buildNumber": "3",
+      "buildNumber": "4",
       "infoPlist": {
         "NSCameraUsageDescription": "Camera access is needed to take your photo for the virtual try-on.",
         "NSPhotoLibraryUsageDescription": "Photo library access is needed to select your photo.",
