@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import Purchases from 'react-native-purchases';
 import {
   View, Text, StyleSheet, TouchableOpacity,
   ScrollView, StatusBar, Alert, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Purchases from 'react-native-purchases';
 import { useCredits } from '../hooks/useCredits';
 import { colors, fonts, spacing } from '../utils/theme';
 import Logo from '../components/Logo';
@@ -222,6 +222,12 @@ export default function PaywallScreen({ navigation, route }) {
             style={[styles.legalNote, { color: colors.copper, textDecorationLine: 'underline' }]}
             onPress={() => Linking.openURL('https://goktan1406-juno.github.io/tryon-expo/privacy.html')}>
             Privacy Policy
+          </Text>
+          {' · '}
+          <Text
+            style={[styles.legalNote, { color: colors.copper, textDecorationLine: 'underline' }]}
+            onPress={() => Linking.openURL('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/')}>
+            Terms of Use
           </Text>
         </Text>
 
