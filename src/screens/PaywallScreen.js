@@ -24,7 +24,6 @@ const FEATURES = [
   'Virtual try-on credits included',
   'Realistic AI fitting technology',
   'Works with model-worn garments',
-  'Try-on via store product link',
   'Save & share your results',
 ];
 
@@ -50,6 +49,18 @@ export default function PaywallScreen({ navigation, route }) {
         [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]);
     } catch (e) {
       if (!e.userCancelled) Alert.alert('Error', e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRestore = async () => {
+    setLoading(true);
+    try {
+      await Purchases.restorePurchases();
+      Alert.alert('Restored', 'Your purchases have been restored.');
+    } catch (e) {
+      Alert.alert('Error', e.message);
     } finally {
       setLoading(false);
     }
@@ -214,6 +225,12 @@ export default function PaywallScreen({ navigation, route }) {
             </TouchableOpacity>
           ))}
         </View>
+
+        <TouchableOpacity onPress={handleRestore} disabled={loading}>
+          <Text style={[styles.legalNote, { color: colors.copper, textDecorationLine: 'underline' }]}>
+            Restore Purchases
+          </Text>
+        </TouchableOpacity>
 
         <Text style={styles.legalNote}>
           Payment is processed through the App Store / Google Play.
