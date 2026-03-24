@@ -22,13 +22,10 @@ export function useCredits() {
     setCredits(data);
   };
 
-  // Simulates a purchase — replace with real payment SDK later
+  // Called after successful RevenueCat purchase
   const purchasePlan = useCallback(async (plan) => {
-    const now = new Date();
-    const expiresAt = plan === 'annual'
-      ? new Date(now.setFullYear(now.getFullYear() + 1)).toISOString()
-      : new Date(now.setMonth(now.getMonth() + 1)).toISOString();
-    const updated = { count: credits.count + 10, plan, expiresAt };
+    const credits_to_add = plan === 'annual' ? 120 : 10;
+    const updated = { ...credits, count: credits.count + credits_to_add, plan };
     await save(updated);
   }, [credits]);
 
