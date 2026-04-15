@@ -77,7 +77,7 @@ export default function ProcessingScreen({ route, navigation }) {
       try {
         const result = await runTryOn(userImageUri, clothingImageUri, productLink, category);
         if (cancelled) return;
-        await spendCredit().catch(() => {}); // düş, hata olsa bile devam et
+        await spendCredit();
         clearInterval(timerRef.current);
         Animated.timing(progressAnim, { toValue: 100, duration: 400, useNativeDriver: false }).start();
         setTimeout(() => {

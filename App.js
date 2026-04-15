@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Purchases from 'react-native-purchases';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { CreditsProvider } from './src/context/CreditsContext';
 import HomeScreen from './src/screens/HomeScreen';
 import UploadScreen from './src/screens/UploadScreen';
 import ProcessingScreen from './src/screens/ProcessingScreen';
@@ -20,6 +21,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
+      <CreditsProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
           <Stack.Screen name="Home" component={HomeScreen} />
@@ -31,6 +33,7 @@ export default function App() {
           <Stack.Screen name="Collection" component={CollectionScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      </CreditsProvider>
     </SafeAreaProvider>
   );
 }

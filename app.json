@@ -14,11 +14,11 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.tryonai.app",
-      "buildNumber": "7",
+      "buildNumber": "8",
       "infoPlist": {
-        "NSCameraUsageDescription": "Camera access is needed to take your photo for the virtual try-on.",
-        "NSPhotoLibraryUsageDescription": "Photo library access is needed to select your photo.",
-        "NSPhotoLibraryAddUsageDescription": "Photo library access is needed to save your try-on results.",
+        "NSCameraUsageDescription": "tryon needs camera access to take a full-body photo of yourself for the AI virtual try-on feature. For example, you can stand in front of a plain wall and take a photo to see how a garment looks on you.",
+        "NSPhotoLibraryUsageDescription": "tryon needs access to your photo library so you can select a full-body photo of yourself for the AI virtual try-on feature. For example, you might choose a photo taken in front of a plain wall to get the best results.",
+        "NSPhotoLibraryAddUsageDescription": "tryon needs access to your photo library to save your AI-generated virtual try-on results so you can view and share them later.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },

@@ -118,12 +118,20 @@ export default function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate('Upload')}>
           <Text style={styles.ctaText}>GET STARTED</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.collectionBtn}
-          activeOpacity={0.85}
-          onPress={() => navigation.navigate('Collection')}>
-          <Text style={styles.collectionText}>MY COLLECTION</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', gap: spacing.sm }}>
+          <TouchableOpacity
+            style={[styles.collectionBtn, { flex: 1 }]}
+            activeOpacity={0.85}
+            onPress={() => navigation.navigate('Collection')}>
+            <Text style={styles.collectionText}>MY COLLECTION</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.collectionBtn, { flex: 1 }]}
+            activeOpacity={0.85}
+            onPress={() => navigation.navigate('Paywall')}>
+            <Text style={styles.collectionText}>GET CREDITS</Text>
+          </TouchableOpacity>
+        </View>
       </Animated.View>
 
       <Text style={styles.footer}>AI Virtual Fitting Room</Text>
