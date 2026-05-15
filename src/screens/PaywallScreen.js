@@ -38,15 +38,16 @@ export default function PaywallScreen({ navigation, route }) {
     try {
       const credits = plan === 'weekly' ? 10 : 120;
       const offerings = await Purchases.getOfferings();
+      if (!offerings.current) throw new Error('Subscriptions are not available at this time. Please try again later.');
       const pkgId = plan === 'weekly' ? '$rc_weekly' : '$rc_annual';
-      const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
-      if (!pkg) throw new Error('Package not available. Try again later.');
+      const pkg = offerings.current.availablePackages.find(p => p.identifier === pkgId);
+      if (!pkg) throw new Error('This plan is not available at this time. Please try again later.');
       await Purchases.purchasePackage(pkg);
       await purchaseCredits(credits);
       Alert.alert('Subscription Active!', `${credits} credits have been added to your account.`,
         [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]);
     } catch (e) {
-      if (!e.userCancelled) Alert.alert('Error', e.message);
+      if (!e.userCancelled) Alert.alert('Purchase Error', e.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -68,15 +69,16 @@ export default function PaywallScreen({ navigation, route }) {
     setLoading(true);
     try {
       const offerings = await Purchases.getOfferings();
+      if (!offerings.current) throw new Error('Purchases are not available at this time. Please try again later.');
       const pkgId = `credits_${pack.amount}`;
-      const pkg = offerings.current?.availablePackages.find(p => p.identifier === pkgId);
-      if (!pkg) throw new Error('Package not available. Try again later.');
+      const pkg = offerings.current.availablePackages.find(p => p.identifier === pkgId);
+      if (!pkg) throw new Error('This package is not available at this time. Please try again later.');
       await Purchases.purchasePackage(pkg);
       await purchaseCredits(pack.amount);
       Alert.alert('Credits Added!', `${pack.amount} credits have been added to your account.`,
         [{ text: 'Great!', onPress: () => navigation.navigate(returnTo) }]);
     } catch (e) {
-      if (!e.userCancelled) Alert.alert('Error', e.message);
+      if (!e.userCancelled) Alert.alert('Purchase Error', e.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -239,7 +241,7 @@ export default function PaywallScreen({ navigation, route }) {
           {' · '}
           <Text
             style={[styles.legalNote, { color: colors.copper, textDecorationLine: 'underline' }]}
-            onPress={() => Linking.openURL('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/')}>
+            onPress={() => Linking.openURL('https://juno-backend-production-3fd5.up.railway.app/terms')}>
             Terms of Use
           </Text>
         </Text>
